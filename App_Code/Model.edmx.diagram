@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b848b857738047e7b39a8cf327e86631" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="DatabaseModel.contract" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.customer" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.customer_phone" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.employee" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.offer" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.payment_methods" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.servy" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="DatabaseModel.FK_contract_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_contract_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_contract_ToTable_2" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_customer_phone_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.contract_sevies" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.servies_offers" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

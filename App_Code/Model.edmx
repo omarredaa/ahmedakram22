@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="contract">
+          <Key>
+            <PropertyRef Name="contract_number" />
+          </Key>
+          <Property Name="contract_number" Type="int" Nullable="false" />
+          <Property Name="details" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="day" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="month" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="year" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="customer_code" Type="int" Nullable="false" />
+          <Property Name="emp_id" Type="int" Nullable="false" />
+          <Property Name="pay_me_number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="contract_sevies">
+          <Key>
+            <PropertyRef Name="contract_number" />
+            <PropertyRef Name="servies_number" />
+          </Key>
+          <Property Name="contract_number" Type="int" Nullable="false" />
+          <Property Name="servies_number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_code" />
+          </Key>
+          <Property Name="customer_code" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="customer_phone">
+          <Key>
+            <PropertyRef Name="customer_code" />
+            <PropertyRef Name="phone" />
+          </Key>
+          <Property Name="customer_code" Type="int" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="int" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="offers">
+          <Key>
+            <PropertyRef Name="offers_number" />
+          </Key>
+          <Property Name="offers_number" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="details" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="discount" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="payment_methods">
+          <Key>
+            <PropertyRef Name="pay_me_number" />
+          </Key>
+          <Property Name="pay_me_number" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="expire_date" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cash" Type="money" />
+          <Property Name="visa" Type="money" />
+        </EntityType>
+        <EntityType Name="servies">
+          <Key>
+            <PropertyRef Name="servies_number" />
+          </Key>
+          <Property Name="servies_number" Type="int" Nullable="false" />
+          <Property Name="servies_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="details" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="insurance" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="insurance_number" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="date" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="value" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="servies_offers">
+          <Key>
+            <PropertyRef Name="servies_number" />
+            <PropertyRef Name="offers_number" />
+          </Key>
+          <Property Name="servies_number" Type="int" Nullable="false" />
+          <Property Name="offers_number" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_contract_sevies_ToTable">
+          <End Role="contract" Type="Self.contract" Multiplicity="1" />
+          <End Role="contract_sevies" Type="Self.contract_sevies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contract">
+              <PropertyRef Name="contract_number" />
+            </Principal>
+            <Dependent Role="contract_sevies">
+              <PropertyRef Name="contract_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_contract_sevies_ToTable_1">
+          <End Role="servies" Type="Self.servies" Multiplicity="1" />
+          <End Role="contract_sevies" Type="Self.contract_sevies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="servies">
+              <PropertyRef Name="servies_number" />
+            </Principal>
+            <Dependent Role="contract_sevies">
+              <PropertyRef Name="servies_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_contract_ToTable">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="contract" Type="Self.contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="contract">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_contract_ToTable_1">
+          <End Role="payment_methods" Type="Self.payment_methods" Multiplicity="1" />
+          <End Role="contract" Type="Self.contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="payment_methods">
+              <PropertyRef Name="pay_me_number" />
+            </Principal>
+            <Dependent Role="contract">
+              <PropertyRef Name="pay_me_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_contract_ToTable_2">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="contract" Type="Self.contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_code" />
+            </Principal>
+            <Dependent Role="contract">
+              <PropertyRef Name="customer_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer_phone_ToTable">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="customer_phone" Type="Self.customer_phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_code" />
+            </Principal>
+            <Dependent Role="customer_phone">
+              <PropertyRef Name="customer_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_servies_offers_ToTable">
+          <End Role="servies" Type="Self.servies" Multiplicity="1" />
+          <End Role="servies_offers" Type="Self.servies_offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="servies">
+              <PropertyRef Name="servies_number" />
+            </Principal>
+            <Dependent Role="servies_offers">
+              <PropertyRef Name="servies_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_servies_offers_ToTable_1">
+          <End Role="offers" Type="Self.offers" Multiplicity="1" />
+          <End Role="servies_offers" Type="Self.servies_offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="offers">
+              <PropertyRef Name="offers_number" />
+            </Principal>
+            <Dependent Role="servies_offers">
+              <PropertyRef Name="offers_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="contract" EntityType="Self.contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contract_sevies" EntityType="Self.contract_sevies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer_phone" EntityType="Self.customer_phone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="offers" EntityType="Self.offers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payment_methods" EntityType="Self.payment_methods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="servies" EntityType="Self.servies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="servies_offers" EntityType="Self.servies_offers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_contract_sevies_ToTable" Association="Self.FK_contract_sevies_ToTable">
+            <End Role="contract" EntitySet="contract" />
+            <End Role="contract_sevies" EntitySet="contract_sevies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contract_sevies_ToTable_1" Association="Self.FK_contract_sevies_ToTable_1">
+            <End Role="servies" EntitySet="servies" />
+            <End Role="contract_sevies" EntitySet="contract_sevies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contract_ToTable" Association="Self.FK_contract_ToTable">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="contract" EntitySet="contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contract_ToTable_1" Association="Self.FK_contract_ToTable_1">
+            <End Role="payment_methods" EntitySet="payment_methods" />
+            <End Role="contract" EntitySet="contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contract_ToTable_2" Association="Self.FK_contract_ToTable_2">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="contract" EntitySet="contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer_phone_ToTable" Association="Self.FK_customer_phone_ToTable">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="customer_phone" EntitySet="customer_phone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_servies_offers_ToTable" Association="Self.FK_servies_offers_ToTable">
+            <End Role="servies" EntitySet="servies" />
+            <End Role="servies_offers" EntitySet="servies_offers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_servies_offers_ToTable_1" Association="Self.FK_servies_offers_ToTable_1">
+            <End Role="offers" EntitySet="offers" />
+            <End Role="servies_offers" EntitySet="servies_offers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="contract">
+          <Key>
+            <PropertyRef Name="contract_number" />
+          </Key>
+          <Property Name="contract_number" Type="Int32" Nullable="false" />
+          <Property Name="details" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="day" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="month" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="year" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="customer_code" Type="Int32" Nullable="false" />
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <Property Name="pay_me_number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_contract_ToTable" FromRole="contract" ToRole="employee" />
+          <NavigationProperty Name="payment_methods" Relationship="Self.FK_contract_ToTable_1" FromRole="contract" ToRole="payment_methods" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_contract_ToTable_2" FromRole="contract" ToRole="customer" />
+          <NavigationProperty Name="servies" Relationship="Self.contract_sevies" FromRole="contract" ToRole="servies" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_code" />
+          </Key>
+          <Property Name="customer_code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="contracts" Relationship="Self.FK_contract_ToTable_2" FromRole="customer" ToRole="contract" />
+          <NavigationProperty Name="customer_phone" Relationship="Self.FK_customer_phone_ToTable" FromRole="customer" ToRole="customer_phone" />
+        </EntityType>
+        <EntityType Name="customer_phone">
+          <Key>
+            <PropertyRef Name="customer_code" />
+            <PropertyRef Name="phone" />
+          </Key>
+          <Property Name="customer_code" Type="Int32" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_customer_phone_ToTable" FromRole="customer_phone" ToRole="customer" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="contracts" Relationship="Self.FK_contract_ToTable" FromRole="employee" ToRole="contract" />
+        </EntityType>
+        <EntityType Name="offer">
+          <Key>
+            <PropertyRef Name="offers_number" />
+          </Key>
+          <Property Name="offers_number" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="details" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="discount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="servies" Relationship="Self.servies_offers" FromRole="offers" ToRole="servies" />
+        </EntityType>
+        <EntityType Name="payment_methods">
+          <Key>
+            <PropertyRef Name="pay_me_number" />
+          </Key>
+          <Property Name="pay_me_number" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="expire_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cash" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="visa" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="contracts" Relationship="Self.FK_contract_ToTable_1" FromRole="payment_methods" ToRole="contract" />
+        </EntityType>
+        <EntityType Name="servy">
+          <Key>
+            <PropertyRef Name="servies_number" />
+          </Key>
+          <Property Name="servies_number" Type="Int32" Nullable="false" />
+          <Property Name="servies_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="details" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="insurance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="insurance_number" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="contracts" Relationship="Self.contract_sevies" FromRole="servies" ToRole="contract" />
+          <NavigationProperty Name="offers" Relationship="Self.servies_offers" FromRole="servies" ToRole="offers" />
+        </EntityType>
+        <Association Name="FK_contract_ToTable">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="contract" Type="Self.contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="contract">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_contract_ToTable_1">
+          <End Role="payment_methods" Type="Self.payment_methods" Multiplicity="1" />
+          <End Role="contract" Type="Self.contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="payment_methods">
+              <PropertyRef Name="pay_me_number" />
+            </Principal>
+            <Dependent Role="contract">
+              <PropertyRef Name="pay_me_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_contract_ToTable_2">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="contract" Type="Self.contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_code" />
+            </Principal>
+            <Dependent Role="contract">
+              <PropertyRef Name="customer_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer_phone_ToTable">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="customer_phone" Type="Self.customer_phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_code" />
+            </Principal>
+            <Dependent Role="customer_phone">
+              <PropertyRef Name="customer_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="contract_sevies">
+          <End Role="contract" Type="Self.contract" Multiplicity="*" />
+          <End Role="servies" Type="Self.servy" Multiplicity="*" />
+        </Association>
+        <Association Name="servies_offers">
+          <End Role="servies" Type="Self.servy" Multiplicity="*" />
+          <End Role="offers" Type="Self.offer" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="contracts" EntityType="Self.contract" />
+          <EntitySet Name="customers" EntityType="Self.customer" />
+          <EntitySet Name="customer_phone" EntityType="Self.customer_phone" />
+          <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="offers" EntityType="Self.offer" />
+          <EntitySet Name="payment_methods" EntityType="Self.payment_methods" />
+          <EntitySet Name="servies" EntityType="Self.servy" />
+          <AssociationSet Name="FK_contract_ToTable" Association="Self.FK_contract_ToTable">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="contract" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contract_ToTable_1" Association="Self.FK_contract_ToTable_1">
+            <End Role="payment_methods" EntitySet="payment_methods" />
+            <End Role="contract" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contract_ToTable_2" Association="Self.FK_contract_ToTable_2">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="contract" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer_phone_ToTable" Association="Self.FK_customer_phone_ToTable">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="customer_phone" EntitySet="customer_phone" />
+          </AssociationSet>
+          <AssociationSet Name="contract_sevies" Association="Self.contract_sevies">
+            <End Role="contract" EntitySet="contracts" />
+            <End Role="servies" EntitySet="servies" />
+          </AssociationSet>
+          <AssociationSet Name="servies_offers" Association="Self.servies_offers">
+            <End Role="servies" EntitySet="servies" />
+            <End Role="offers" EntitySet="offers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities1">
+          <EntitySetMapping Name="contracts">
+            <EntityTypeMapping TypeName="DatabaseModel.contract">
+              <MappingFragment StoreEntitySet="contract">
+                <ScalarProperty Name="contract_number" ColumnName="contract_number" />
+                <ScalarProperty Name="details" ColumnName="details" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="customer_code" ColumnName="customer_code" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="pay_me_number" ColumnName="pay_me_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="DatabaseModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="customer_code" ColumnName="customer_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_phone">
+            <EntityTypeMapping TypeName="DatabaseModel.customer_phone">
+              <MappingFragment StoreEntitySet="customer_phone">
+                <ScalarProperty Name="customer_code" ColumnName="customer_code" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="DatabaseModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="offers">
+            <EntityTypeMapping TypeName="DatabaseModel.offer">
+              <MappingFragment StoreEntitySet="offers">
+                <ScalarProperty Name="offers_number" ColumnName="offers_number" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="details" ColumnName="details" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment_methods">
+            <EntityTypeMapping TypeName="DatabaseModel.payment_methods">
+              <MappingFragment StoreEntitySet="payment_methods">
+                <ScalarProperty Name="pay_me_number" ColumnName="pay_me_number" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="expire_date" ColumnName="expire_date" />
+                <ScalarProperty Name="cash" ColumnName="cash" />
+                <ScalarProperty Name="visa" ColumnName="visa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="servies">
+            <EntityTypeMapping TypeName="DatabaseModel.servy">
+              <MappingFragment StoreEntitySet="servies">
+                <ScalarProperty Name="servies_number" ColumnName="servies_number" />
+                <ScalarProperty Name="servies_name" ColumnName="servies_name" />
+                <ScalarProperty Name="details" ColumnName="details" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="insurance" ColumnName="insurance" />
+                <ScalarProperty Name="insurance_number" ColumnName="insurance_number" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="contract_sevies" TypeName="DatabaseModel.contract_sevies" StoreEntitySet="contract_sevies">
+            <EndProperty Name="contract">
+              <ScalarProperty Name="contract_number" ColumnName="contract_number" />
+            </EndProperty>
+            <EndProperty Name="servies">
+              <ScalarProperty Name="servies_number" ColumnName="servies_number" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="servies_offers" TypeName="DatabaseModel.servies_offers" StoreEntitySet="servies_offers">
+            <EndProperty Name="servies">
+              <ScalarProperty Name="servies_number" ColumnName="servies_number" />
+            </EndProperty>
+            <EndProperty Name="offers">
+              <ScalarProperty Name="offers_number" ColumnName="offers_number" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
